@@ -1,0 +1,14 @@
+language: node_js
+node_js: node
+
+# will run `npm install` automatically
+
+script:
+  - npm run test
+
+notifications:
+    email: false
+
+cache:
+  directories:
+    - node_modules

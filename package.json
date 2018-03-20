@@ -1,0 +1,20 @@
+{
+    "name": "webtasks",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "express": "^4.16.3",
+        "request": "^2.85.0",
+        "webtask-tools": "^3.2.0"
+    },
+    "scripts": {
+        "start": "node webtask-medium.js",
+        "test": "eslint ./{src,public}/**/*.js"
+    },
+    "devDependencies": {
+        "babel-eslint": "^8.2.2",
+        "eslint": "^4.19.0",
+        "eslint-config-ascribe": "^3.0.5",
+        "eslint-plugin-import": "^2.9.0"
+    }
+}
