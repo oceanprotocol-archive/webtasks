@@ -4,7 +4,7 @@ node_js: node
 # will run `npm install` automatically
 
 script:
-  - npm run test
+  - npm test
 
 notifications:
     email: false

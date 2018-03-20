@@ -1,0 +1,6 @@
+{
+    "extends": "ascribe",
+    "rules": {
+        "func-names": 0
+    }
+}
