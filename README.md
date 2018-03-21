@@ -1,6 +1,6 @@
 # Webtasks
 
-> Ocean Protocol's webtasks doing automatic things for us via webtask.io
+> 🐬 Ocean Protocol's webtasks doing automatic things for us via webtask.io
 
 ![giphy](https://user-images.githubusercontent.com/90316/37671913-0eb2f70a-2c6d-11e8-809e-04d3b40ef1c9.gif)
 
@@ -14,7 +14,7 @@
 Requires the Medium username appended at the end of the url, e.g. locally:
 
 ```
-http://localhost:4000/MEDIUM_USERNAME
+http://localhost:8080/MEDIUM_USERNAME
 ```
 
 When published as a web task, append the taskname followed by the Medium username at the end:
@@ -30,7 +30,7 @@ https://TASK_URL/TASK_NAME/MEDIUM_USERNAME
 Construct your request url like so, e.g. locally:
 
 ```
-http://localhost:4000/YOUTUBE_PLAYLIST_ID/YOUTUBE_API_KEY
+http://localhost:8080/YOUTUBE_PLAYLIST_ID/YOUTUBE_API_KEY
 ```
 
 Add the task name when published on webtask.io:
@@ -45,6 +45,8 @@ https://TASK_URL/TASK_NAME/YOUTUBE_PLAYLIST_ID/YOUTUBE_API_KEY
 npm install wt-cli -g
 npm start
 ```
+
+And go to [localhost:8080](http://localhost:8080)
 
 ## Deployment
 
@@ -63,7 +65,7 @@ wt ls
 ## Authors
 
 - Matthias Kretschmann ([@kremalicious](https://github.com/kremalicious)) - [BigchainDB](https://www.bigchaindb.com) & [Ocean Protocol](https://oceanprotocol.com)
-- initial Medium web task by [@pedrouid](https://github.com/pedrouid)
+- initial Medium web task by Pedro Gomes ([@pedrouid](https://github.com/pedrouid)) - [Balance](https://balance.io)
 
 ## License
 
