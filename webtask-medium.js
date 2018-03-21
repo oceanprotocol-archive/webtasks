@@ -54,6 +54,4 @@ app.get('/:username/raw', (req, res) => {
     })
 })
 
-app.listen(4000, () => console.log('Example app listening on localhost:4000!')) // eslint-disable-line no-console
-
 module.exports = webtask.fromExpress(app)

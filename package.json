@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "start": "node webtask-medium.js",
+        "start": "wt serve webtask-medium.js",
         "test": "eslint ./{src,public}/**/*.js"
     },
     "dependencies": {
