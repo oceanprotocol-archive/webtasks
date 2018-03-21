@@ -13,27 +13,36 @@
 
 Requires the Medium username appended at the end of the url, e.g. locally:
 
-```js
-fetch('http://localhost:4000/oceanprotocol')
-    .then(res => res.json())
-    .then(posts => {
-        const lastPosts = posts.slice(0, 3)
-    })
+```
+http://localhost:4000/MEDIUM_USERNAME
 ```
 
 When published as a web task, append the taskname followed by the Medium username at the end:
 
-```js
-fetch('https://wt-bfc3ae9804422f8a4ea114dc7c403296-0.run.webtask.io/medium/oceanprotocol')
-    .then(res => res.json())
-    .then(posts => {
-        const lastPosts = posts.slice(0, 3)
-    })
+```
+https://TASK_URL/TASK_NAME/MEDIUM_USERNAME
+```
+
+---
+
+**`webtask-youtube.js`**: Generic task to fetch and reconstruct items from any YouTube account. For now, only fetches a playlist.
+
+Construct your request url like so, e.g. locally:
+
+```
+http://localhost:4000/YOUTUBE_PLAYLIST_ID/YOUTUBE_API_KEY
+```
+
+Add the task name when published on webtask.io:
+
+```
+https://TASK_URL/TASK_NAME/YOUTUBE_PLAYLIST_ID/YOUTUBE_API_KEY
 ```
 
 ## Development
 
 ```bash
+npm install wt-cli -g
 npm start
 ```
 
@@ -50,6 +59,11 @@ wt create webtask-medium.js --name medium
 # make sure it's there and get url
 wt ls
 ```
+
+## Authors
+
+- Matthias Kretschmann ([@kremalicious](https://github.com/kremalicious)) - [BigchainDB](https://www.bigchaindb.com) & [Ocean Protocol](https://oceanprotocol.com)
+- initial Medium web task by [@pedrouid](https://github.com/pedrouid)
 
 ## License
 
