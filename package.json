@@ -3,10 +3,11 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "start": "wt serve webtask-medium.js",
+        "start": "wt serve webtask-moonmail.js",
         "test": "eslint ./{src,public}/**/*.js"
     },
     "dependencies": {
+        "axios": "^0.18.0",
         "express": "^4.16.3",
         "request": "^2.85.0",
         "webtask-tools": "^3.2.0"
