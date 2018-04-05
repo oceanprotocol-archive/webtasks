@@ -25,18 +25,18 @@ https://TASK_URL/TASK_NAME/MEDIUM_USERNAME
 
 ---
 
-**`webtask-youtube.js`**: Generic task to fetch and reconstruct items from any YouTube account. For now, only fetches a playlist.
+**`webtask-youtube.js`**: Generic task to fetch and reconstruct items from any YouTube account. For now, only fetches a playlist. YouTube API key is provided via [secret environment variable](https://webtask.io/docs/issue_parameters) `YOUTUBE_API_KEY` setup in web editor of webtask.io
 
 Construct your request url like so, e.g. locally:
 
 ```
-http://localhost:8080/YOUTUBE_PLAYLIST_ID/YOUTUBE_API_KEY
+http://localhost:8080/YOUTUBE_PLAYLIST_ID
 ```
 
 Add the task name when published on webtask.io:
 
 ```
-https://TASK_URL/TASK_NAME/YOUTUBE_PLAYLIST_ID/YOUTUBE_API_KEY
+https://TASK_URL/TASK_NAME/YOUTUBE_PLAYLIST_ID
 ```
 
 ## Development

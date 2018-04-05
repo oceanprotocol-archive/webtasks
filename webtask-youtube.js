@@ -10,9 +10,9 @@ app.get('/', (req, res) => {
     res.send('Please specify the playlist ID and API key.')
 })
 
-app.get('/:playlist/:apikey', (req, res) => {
+app.get('/:playlist', (req, res) => {
     const options = {
-        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&playlistId=${req.params.playlist}&key=${req.params.apikey}`,
+        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&playlistId=${req.params.playlist}&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
         headers: { 'referer': req.headers.host }
     }
 
@@ -41,9 +41,9 @@ app.get('/:playlist/:apikey', (req, res) => {
     })
 })
 
-app.get('/:playlist/:apikey/raw', (req, res) => {
+app.get('/:playlist/raw', (req, res) => {
     const options = {
-        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&playlistId=${req.params.playlist}&key=${req.params.apikey}`,
+        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&playlistId=${req.params.playlist}&key=${process.env.YOUTUBE_API_KEY}`,
         headers: { 'referer': req.headers.host }
     }
 
