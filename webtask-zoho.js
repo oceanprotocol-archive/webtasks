@@ -34,7 +34,7 @@ server.get('/newsletter/:data', (req, res) => {
     const { data } = req.params
 
     const options = {
-        url: `${apiUrlZohoCampaigns}json/listsubscribe?authtoken=${ZOHO_CAMPAIGNS_TOKEN}&scope=CampaignsAPI&resfmt=JSON&listkey=${ZOHO_CAMPAIGNS_LIST_KEY}&contactinfo=${data}` // eslint-disable-line max-len
+        url: `${apiUrlZohoCampaigns}json/listsubscribe?authtoken=${ZOHO_CAMPAIGNS_TOKEN}&scope=CampaignsAPI&resfmt=JSON&listkey=${ZOHO_CAMPAIGNS_LIST_KEY}&contactinfo=${decodeURIComponent(data)}` // eslint-disable-line max-len
     }
     sendRequest(options, res)
 })
