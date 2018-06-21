@@ -1,7 +1,6 @@
 const express = require('express')
 const Webtask = require('webtask-tools')
 const cors = require('cors')
-const proxy = require('http-proxy-middleware')
 const bodyParser = require('body-parser')
 const request = require('request')
 
@@ -11,6 +10,9 @@ server.use(cors())
 server.listen(4430)
 server.use(bodyParser.json())
 
+//
+// Zoho API urls
+//
 const apiUrlZohoCampaigns = 'https://campaigns.zoho.com/api/'
 const apiUrlZohoCRM = 'https://www.zohoapis.com/crm/v2/'
 
@@ -26,7 +28,7 @@ server.get('/newsletter/:data', (req, res) => {
         url: `${apiUrlZohoCampaigns}json/listsubscribe?authtoken=${ZOHO_CAMPAIGNS_TOKEN}&scope=CampaignsAPI&resfmt=JSON&listkey=${ZOHO_CAMPAIGNS_LIST_KEY}&contactinfo=${data}` // eslint-disable-line max-len
     }
 
-    request(options, (error, response, body) => { // eslint-disable-line consistent-return
+    request(options, (error, response, body) => {
         if (error) {
             res.send(error)
         }
@@ -36,19 +38,29 @@ server.get('/newsletter/:data', (req, res) => {
     })
 })
 
-const onProxyReqZohoCRM = (proxyReq, req) => {
+//
+// Create a new lead via Zoho CRM API
+// https://www.zoho.com/crm/help/api/v2/#create-specify-records
+//
+server.get('/crm/:data', (req, res) => {
     const { ZOHO_CRM_TOKEN } = req.webtaskContext.secrets
+    const { data } = req.params
 
-    proxyReq.setHeader('Authorization', `Zoho-oauthtoken ${ZOHO_CRM_TOKEN}`)
-}
+    const options = {
+        url: `${apiUrlZohoCRM}Leads`, // eslint-disable-line max-len
+        headers: { 'Authorization': `Zoho-oauthtoken ${ZOHO_CRM_TOKEN}` },
+        method: 'POST',
+        formData: data
+    }
 
-const configZohoCRM = {
-    target: apiUrlZohoCRM,
-    pathRewrite: { '^/zoho/crm/': '/' },
-    changeOrigin: true,
-    onProxyReq: onProxyReqZohoCRM
-}
+    request(options, (error, response, body) => {
+        if (error) {
+            res.send(error)
+        }
 
-server.use(proxy('/zoho/crm/**', configZohoCRM))
+        res.send(body)
+        res.sendStatus(200)
+    })
+})
 
 module.exports = Webtask.fromExpress(server)
