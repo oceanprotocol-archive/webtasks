@@ -3,11 +3,13 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "start": "wt serve webtask-medium.js",
+        "start": "wt serve webtask-zoho.js",
         "test": "eslint ./{src,public}/**/*.js"
     },
     "dependencies": {
+        "cors": "^2.8.4",
         "express": "^4.16.3",
+        "http-proxy-middleware": "^0.18.0",
         "request": "^2.85.0",
         "webtask-tools": "^3.2.0"
     },
