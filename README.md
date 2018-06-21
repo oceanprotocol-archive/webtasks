@@ -9,6 +9,8 @@
 
 ## Tasks
 
+### Medium
+
 **`webtask-medium.js`**: Generic task to fetch and reconstruct items from any medium publication.
 
 Requires the Medium username appended at the end of the url, e.g. locally:
@@ -23,7 +25,7 @@ When published as a web task, append the taskname followed by the Medium usernam
 https://TASK_URL/TASK_NAME/MEDIUM_USERNAME
 ```
 
----
+### YouTube
 
 **`webtask-youtube.js`**: Generic task to fetch and reconstruct items from any YouTube account. For now, only fetches a playlist. YouTube API key is provided via [secret environment variable](https://webtask.io/docs/issue_parameters) `YOUTUBE_API_KEY` setup in web editor of webtask.io
 
@@ -37,6 +39,28 @@ Add the task name when published on webtask.io:
 
 ```
 https://TASK_URL/TASK_NAME/YOUTUBE_PLAYLIST_ID
+```
+
+### Zoho
+
+**`webtask-zoho.js`**: Generic task to subscribe users into lists on Zoho Campaigns & Zoho CRM. Credentials are provided via [secret environment variables](https://webtask.io/docs/issue_parameters), setup in web editor of webtask.io.
+
+The user input data needs to be in `json` format like so:
+
+```
+{Contact Email:info@oceanprotocol.com}
+```
+
+To subscribe a user to the newsletter, construct your request url like so, e.g. locally:
+
+```
+http://localhost:8080/newsletter/DATA
+```
+
+Add the task name when published on webtask.io:
+
+```
+https://TASK_URL/TASK_NAME/newsletter/DATA
 ```
 
 ## Development
