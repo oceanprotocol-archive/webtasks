@@ -21,7 +21,7 @@ const sendRequest = (options, res) => {
         if (error) res.send(error)
 
         res.send(body)
-        res.sendStatus(200)
+        res.sendStatus(response.statusCode)
     })
 }
 
