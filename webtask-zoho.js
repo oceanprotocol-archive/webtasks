@@ -11,10 +11,19 @@ server.listen(4430)
 server.use(bodyParser.json())
 
 //
-// Zoho API urls
+// Zoho APIs
 //
 const apiUrlZohoCampaigns = 'https://campaigns.zoho.com/api/'
 const apiUrlZohoCRM = 'https://www.zohoapis.com/crm/v2/'
+
+const sendRequest = (options, res) => {
+    request(options, (error, response, body) => {
+        if (error) res.send(error)
+
+        res.send(body)
+        res.sendStatus(200)
+    })
+}
 
 //
 // Subscribe to newsletter via Zoho Campaigns API
@@ -27,15 +36,7 @@ server.get('/newsletter/:data', (req, res) => {
     const options = {
         url: `${apiUrlZohoCampaigns}json/listsubscribe?authtoken=${ZOHO_CAMPAIGNS_TOKEN}&scope=CampaignsAPI&resfmt=JSON&listkey=${ZOHO_CAMPAIGNS_LIST_KEY}&contactinfo=${data}` // eslint-disable-line max-len
     }
-
-    request(options, (error, response, body) => {
-        if (error) {
-            res.send(error)
-        }
-
-        res.send(body)
-        res.sendStatus(200)
-    })
+    sendRequest(options, res)
 })
 
 //
@@ -52,15 +53,7 @@ server.get('/crm/:data', (req, res) => {
         method: 'POST',
         formData: data
     }
-
-    request(options, (error, response, body) => {
-        if (error) {
-            res.send(error)
-        }
-
-        res.send(body)
-        res.sendStatus(200)
-    })
+    sendRequest(options, res)
 })
 
 module.exports = Webtask.fromExpress(server)
