@@ -1,4 +1,6 @@
-# Webtasks
+[![banner](https://raw.githubusercontent.com/oceanprotocol/art/master/github/repo-banner%402x.png)](https://oceanprotocol.com)
+
+<h1 align="center">webtasks</h1>
 
 > 🐬 Ocean Protocol's webtasks doing automatic things for us via webtask.io
 
@@ -7,60 +9,75 @@
 [![Build Status](https://travis-ci.com/oceanprotocol/webtasks.svg?token=3psqw6c8KMDqfdGQ2x6d&branch=master)](https://travis-ci.com/oceanprotocol/webtasks)
 [![js ascribe](https://img.shields.io/badge/js-ascribe-39BA91.svg)](https://github.com/ascribe/javascript)
 
+## Table of Contents
+
+  - [Tasks](#tasks)
+     - [Medium](#medium)
+     - [YouTube](#youtube)
+     - [Zoho](#zoho)
+        - [Campaigns API](#campaigns-api)
+  - [Development](#development)
+  - [Deployment](#deployment)
+  - [Authors](#authors)
+  - [License](#license)
+
+---
+
 ## Tasks
 
 ### Medium
 
 **`webtask-medium.js`**: Generic task to fetch and reconstruct items from any medium publication.
 
-Requires the Medium username appended at the end of the url, e.g. locally:
+Requires the Medium username appended at the end of the url:
 
-```
-http://localhost:8080/MEDIUM_USERNAME
-```
+```bash
+http://localhost:8080/:medium_username
 
-When published as a web task, append the taskname followed by the Medium username at the end:
-
-```
-https://TASK_URL/TASK_NAME/MEDIUM_USERNAME
+# when published on webtask.io
+https://TASK_URL/TASK_NAME/:medium_username
 ```
 
 ### YouTube
 
-**`webtask-youtube.js`**: Generic task to fetch and reconstruct items from any YouTube account. For now, only fetches a playlist. YouTube API key is provided via [secret environment variable](https://webtask.io/docs/issue_parameters) `YOUTUBE_API_KEY` setup in web editor of webtask.io
+**`webtask-youtube.js`**: Generic task to fetch and reconstruct items from any YouTube account. For now, only fetches a playlist. YouTube API key is provided via [secret environment variable](https://webtask.io/docs/issue_parameters) `YOUTUBE_API_KEY` setup in web editor of webtask.io.
 
 Construct your request url like so, e.g. locally:
 
-```
-http://localhost:8080/YOUTUBE_PLAYLIST_ID
-```
+```bash
+http://localhost:8080/:youtube_playlist_id
 
-Add the task name when published on webtask.io:
-
-```
-https://TASK_URL/TASK_NAME/YOUTUBE_PLAYLIST_ID
+# when published on webtask.io
+https://TASK_URL/TASK_NAME/:youtube_playlist_id
 ```
 
 ### Zoho
 
-**`webtask-zoho.js`**: Generic task to subscribe users into lists on Zoho Campaigns & Zoho CRM. Credentials are provided via [secret environment variables](https://webtask.io/docs/issue_parameters), setup in web editor of webtask.io.
+**`webtask-zoho.js`**: Generic task to subscribe users into lists on Zoho Campaigns & Zoho CRM.
 
-The user input data needs to be in `json` format like so:
+Credentials are provided via [secret environment variables](https://webtask.io/docs/issue_parameters), setup in web editor of webtask.io:
+
+* `ZOHO_CAMPAIGNS_TOKEN`
+* `ZOHO_CAMPAIGNS_LIST_KEY`
+* `ZOHO_CRM_TOKEN`
+
+#### Campaigns API
+
+* `/newsletter/:data`: subscribes the given email address to the newsletter list on Zoho Campaigns.
+
+The data needs to be in `json` format in the following pattern:
 
 ```
 {Contact Email:info@oceanprotocol.com}
 ```
 
-To subscribe a user to the newsletter, construct your request url like so, e.g. locally:
+Construct your request url like so, e.g. locally:
 
-```
-http://localhost:8080/newsletter/DATA
-```
+```bash
+http://localhost:8080/newsletter/:data
 
-Add the task name when published on webtask.io:
-
-```
-https://TASK_URL/TASK_NAME/newsletter/DATA
+# when published on webtask.io
+https://TASK_URL/TASK_NAME/newsletter/:data
 ```
 
 ## Development
