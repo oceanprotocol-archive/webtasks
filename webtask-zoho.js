@@ -6,9 +6,17 @@ const request = require('request')
 
 const server = express()
 
-server.use(cors())
 server.listen(4430)
 server.use(bodyParser.json())
+
+//
+// Allow requests from these domains only
+//
+const corsOptions = {
+    origin: ['https://oceanprotocol.com', /\.oceanprotocol\.com$/],
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+server.use(cors(corsOptions))
 
 //
 // Zoho APIs
@@ -20,6 +28,8 @@ const sendRequest = (options, res) => {
     request(options, (error, response, body) => {
         if (error) res.send(error)
 
+        // just pass through whatever we get from the APIs
+        // as the response
         res.send(body)
         res.sendStatus(response.statusCode)
     })
