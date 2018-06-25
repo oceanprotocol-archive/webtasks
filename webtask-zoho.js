@@ -31,7 +31,6 @@ const sendRequest = (options, res) => {
         // just pass through whatever we get from the APIs
         // as the response
         res.send(body)
-        res.sendStatus(response.statusCode)
     })
 }
 
@@ -58,7 +57,7 @@ server.get('/crm/:data', (req, res) => {
     const { data } = req.params
 
     const options = {
-        url: `${apiUrlZohoCRM}Leads`, // eslint-disable-line max-len
+        url: `${apiUrlZohoCRM}Leads`,
         headers: { 'Authorization': `Zoho-oauthtoken ${ZOHO_CRM_TOKEN}` },
         method: 'POST',
         formData: data
