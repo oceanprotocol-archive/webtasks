@@ -10,13 +10,13 @@
         "body-parser": "^1.18.3",
         "cors": "^2.8.4",
         "express": "^4.16.3",
-        "request": "^2.85.0",
-        "webtask-tools": "^3.2.0"
+        "request": "^2.87.0",
+        "webtask-tools": "^3.2.1"
     },
     "devDependencies": {
-        "babel-eslint": "^8.2.2",
-        "eslint": "^4.19.0",
+        "babel-eslint": "^8.2.5",
+        "eslint": "^4.19.1",
         "eslint-config-ascribe": "^3.0.5",
-        "eslint-plugin-import": "^2.9.0"
+        "eslint-plugin-import": "^2.13.0"
     }
 }
