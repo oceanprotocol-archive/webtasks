@@ -34,10 +34,25 @@ const sendRequest = (options, res) => {
     })
 }
 
+server.get('/', (req, res) => {
+    res.send(`
+        <h3>Please provide one of these endpoints:</h3>
+        - <code>/newsletter/:data</code><br />
+        - <code>/crm/:data</code>
+    `)
+})
+
 //
 // Subscribe to newsletter via Zoho Campaigns API
 // https://www.zoho.com/campaigns/newhelp/api/contact-subscribe.html
 //
+server.get('/newsletter', (req, res) => {
+    res.send(`
+        <h3>Please pass your data in the following format</h3>
+        - <code>/newsletter/{Contact Email:info@oceanprotocol.com}</code><br />
+    `)
+})
+
 server.get('/newsletter/:data', (req, res) => {
     const { ZOHO_CAMPAIGNS_TOKEN, ZOHO_CAMPAIGNS_LIST_KEY } = req.webtaskContext.secrets
     const { data } = req.params
@@ -52,6 +67,11 @@ server.get('/newsletter/:data', (req, res) => {
 // Create a new lead via Zoho CRM API
 // https://www.zoho.com/crm/help/api/v2/#create-specify-records
 //
+server.get('/crm', (req, res) => {
+    res.send(`<h3>Please pass your data in the following format</h3>
+        - <code>/crm/{First Name:First Name, Last Name:Last Name,Contact Email:info@oceanprotocol.com}</code>`) // eslint-disable-line max-len
+})
+
 server.get('/crm/:data', (req, res) => {
     const { ZOHO_CRM_TOKEN } = req.webtaskContext.secrets
     const { data } = req.params
