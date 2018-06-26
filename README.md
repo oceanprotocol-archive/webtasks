@@ -16,6 +16,7 @@
      - [YouTube](#youtube)
      - [Zoho](#zoho)
         - [Campaigns API](#campaigns-api)
+        - [CRM API](#crm-api)
   - [Development](#development)
   - [Deployment](#deployment)
   - [Authors](#authors)
@@ -78,6 +79,25 @@ http://localhost:8080/newsletter/:data
 
 # when published on webtask.io
 https://TASK_URL/TASK_NAME/newsletter/:data
+```
+
+#### CRM API
+
+* `/crm/:data`: subscribes the given email address to the newsletter list on Zoho Campaigns.
+
+The data needs to be in `json` format in the following pattern:
+
+```
+{First Name:Jellyfish, Last Name:McJellyfish, Contact Email:info@oceanprotocol.com}
+```
+
+Construct your request url like so, e.g. locally:
+
+```bash
+http://localhost:8080/crm/:data
+
+# when published on webtask.io
+https://TASK_URL/TASK_NAME/crm/:data
 ```
 
 ## Development
