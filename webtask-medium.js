@@ -15,7 +15,7 @@ app.get('/:username', (req, res) => {
 
     request(url, (error, response) => {
         const json = JSON.parse(response.body.replace('])}while(1);</x>', ''))
-        const posts = json.payload.posts // eslint-disable-line prefer-destructuring
+        const posts = json.payload.posts
         const parsedPosts = []
         let holder = {}
 
@@ -44,7 +44,7 @@ app.get('/:username/raw', (req, res) => {
 
     request(url, (error, response) => {
         const json = JSON.parse(response.body.replace('])}while(1);</x>', ''))
-        const posts = json.payload.posts // eslint-disable-line prefer-destructuring
+        const posts = json.payload.posts
 
         if (error) {
             return

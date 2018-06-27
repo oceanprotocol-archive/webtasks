@@ -1,6 +1,3 @@
 {
-    "extends": "ascribe",
-    "rules": {
-        "func-names": 0
-    }
+    "extends": "oceanprotocol"
 }

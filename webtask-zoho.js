@@ -58,7 +58,7 @@ server.get('/newsletter/:data', (req, res) => {
     const { data } = req.params
 
     const options = {
-        url: `${apiUrlZohoCampaigns}json/listsubscribe?authtoken=${ZOHO_CAMPAIGNS_TOKEN}&scope=CampaignsAPI&resfmt=JSON&listkey=${ZOHO_CAMPAIGNS_LIST_KEY}&contactinfo=${decodeURIComponent(data)}` // eslint-disable-line max-len
+        url: `${apiUrlZohoCampaigns}json/listsubscribe?authtoken=${ZOHO_CAMPAIGNS_TOKEN}&scope=CampaignsAPI&resfmt=JSON&listkey=${ZOHO_CAMPAIGNS_LIST_KEY}&contactinfo=${decodeURIComponent(data)}`
     }
     sendRequest(options, res)
 })
@@ -69,7 +69,7 @@ server.get('/newsletter/:data', (req, res) => {
 //
 server.get('/crm', (req, res) => {
     res.send(`<h3>Please pass your data in the following format</h3>
-        - <code>/crm/{First Name:First Name, Last Name:Last Name,Contact Email:info@oceanprotocol.com}</code>`) // eslint-disable-line max-len
+        - <code>/crm/{First Name:First Name, Last Name:Last Name,Contact Email:info@oceanprotocol.com}</code>`)
 })
 
 server.get('/crm/:data', (req, res) => {
