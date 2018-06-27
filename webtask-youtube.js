@@ -18,7 +18,7 @@ app.get('/:playlist', (req, res) => {
 
     request(options, (error, response, body) => {
         const json = JSON.parse(body)
-        const videos = json.items // eslint-disable-line prefer-destructuring
+        const videos = json.items
         const parsedPosts = []
 
         let holder = {}
