@@ -7,7 +7,7 @@ const webtask = require('webtask-tools')
 const app = express()
 
 app.get('/', (req, res) => {
-    res.send('Please specify the playlist ID and API key.')
+    res.send('Please specify the playlist ID as parameter.')
 })
 
 app.get('/:playlist', (req, res) => {

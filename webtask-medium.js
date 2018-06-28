@@ -15,7 +15,7 @@ app.get('/:username', (req, res) => {
 
     request(url, (error, response) => {
         const json = JSON.parse(response.body.replace('])}while(1);</x>', ''))
-        const posts = json.payload.posts
+        const { posts } = json.payload
         const parsedPosts = []
         let holder = {}
 
@@ -44,7 +44,7 @@ app.get('/:username/raw', (req, res) => {
 
     request(url, (error, response) => {
         const json = JSON.parse(response.body.replace('])}while(1);</x>', ''))
-        const posts = json.payload.posts
+        const { posts } = json.payload
 
         if (error) {
             return
