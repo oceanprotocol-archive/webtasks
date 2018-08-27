@@ -10,16 +10,17 @@
         "body-parser": "^1.18.3",
         "cors": "^2.8.4",
         "express": "^4.16.3",
-        "request": "^2.87.0",
-        "webtask-tools": "^3.2.1"
+        "request": "^2.88.0",
+        "webtask-tools": "^3.4.0"
     },
     "devDependencies": {
-        "eslint": "^5.0.1",
-        "eslint-config-oceanprotocol": "^1.0.6",
+        "eslint": "^5.4.0",
+        "eslint-config-oceanprotocol": "^1.1.1",
         "eslint-config-standard": "^11.0.0",
-        "eslint-plugin-import": "^2.13.0",
+        "eslint-plugin-import": "^2.14.0",
         "eslint-plugin-node": "^7.0.1",
         "eslint-plugin-promise": "^4.0.0",
+        "eslint-plugin-security": "^1.4.0",
         "eslint-plugin-standard": "^3.1.0"
     }
 }
