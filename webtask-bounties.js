@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
         holder.gitcoin = gitcoin
 
         // Bounties.network bounties
-        request('https://new.api.bounties.network/bounty/?search=ocean%20protocol&bountyStage=1', (error, response, body) => {
+        request('https://new.api.bounties.network/bounty/?search=ocean%20protocol&bountyStage=1&platform=bounties-network', (error, response, body) => {
             if (error) return
 
             const bountiesNetwork = JSON.parse(body)
