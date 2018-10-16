@@ -8,7 +8,6 @@ const app = express()
 
 // Just chained callbacks in lack of proper async/await support on webtask.io
 app.get('/', (req, res) => {
-
     // Gitcoin bounties
     request('https://gitcoin.co/api/v0.1/bounties/', (error, response, body) => {
         if (error) return error
@@ -22,7 +21,7 @@ app.get('/', (req, res) => {
         let holder = {}
 
         holder.gitcoin = gitcoin
-        
+
         // Bounties.network bounties
         request('https://new.api.bounties.network/bounty/?search=ocean%20protocol&bountyStage=1', (error, response, body) => {
             if (error) return
