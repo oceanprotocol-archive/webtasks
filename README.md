@@ -14,6 +14,7 @@
   - [Tasks](#tasks)
      - [Medium](#medium)
      - [YouTube](#youtube)
+     - [Bounties](#Bounties)
      - [Zoho](#zoho)
         - [Campaigns API](#campaigns-api)
         - [CRM API](#crm-api)
@@ -50,6 +51,32 @@ http://localhost:8080/:youtube_playlist_id
 
 # when published on webtask.io
 https://TASK_URL/TASK_NAME/:youtube_playlist_id
+```
+
+### Bounties
+
+**`webtask-bounties.js`**: Task to fetch open bounties on Gitcoin and Bounties.network in one request. Task creates a unified response from fetching both networks.
+
+Construct your `/` request url like so, e.g. locally:
+
+```bash
+http://localhost:8080/
+
+# when published on webtask.io
+https://TASK_URL/TASK_NAME/
+```
+
+Response is structured by network and fills it with whatever comes back from respective API:
+
+```json
+{
+  "gitcoin": [
+    {...}
+  ],
+  "bountiesNetwork": [
+    {...}
+  ]
+}
 ```
 
 ### Zoho
