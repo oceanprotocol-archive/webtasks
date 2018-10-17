@@ -19,9 +19,7 @@ app.get('/:username', (req, res) => {
         const parsedPosts = []
         let holder = {}
 
-        if (error) {
-            return
-        }
+        if (error) return
 
         for (let i = 0; i < posts.length; i++) {
             holder.id = posts[i].id
@@ -29,7 +27,7 @@ app.get('/:username', (req, res) => {
             holder.readingTime = posts[i].virtuals.readingTime
             holder.title = posts[i].title
             holder.subtitle = posts[i].virtuals.subtitle
-            holder.imageUrl = `https://cdn-images-1.medium.com/${posts[i].virtuals.previewImage.imageId}`
+            holder.imageUrl = `https://cdn-images-1.medium.com/max/600/${posts[i].virtuals.previewImage.imageId}`
             holder.postUrl = `https://medium.com/${req.params.username}/${posts[i].id}`
             parsedPosts.push(holder)
             holder = {}
@@ -46,9 +44,7 @@ app.get('/:username/raw', (req, res) => {
         const json = JSON.parse(response.body.replace('])}while(1);</x>', ''))
         const { posts } = json.payload
 
-        if (error) {
-            return
-        }
+        if (error) return
 
         res.send(posts)
     })
