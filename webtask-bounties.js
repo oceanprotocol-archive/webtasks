@@ -6,15 +6,17 @@ const webtask = require('webtask-tools')
 
 const app = express()
 
-// Just chained callbacks in lack of proper async/await support on webtask.io
-app.get('/', (req, res) => {
+let cached
+
+const getData = res => {
+    // Just chained callbacks in lack of proper async/await support on webtask.io
     // Gitcoin bounties
     request('https://gitcoin.co/api/v0.1/bounties/', (error, response, body) => {
         if (error) return error
 
         const gitcoinBody = JSON.parse(body) // returns only open bounties by default
         const gitcoin = gitcoinBody.filter(
-            // filter the response manually, no way atm to do that as API query
+        // filter the response manually, no way atm to do that as API query
             item => item.funding_organisation.includes('Ocean Protocol')
         )
 
@@ -29,10 +31,20 @@ app.get('/', (req, res) => {
             const bountiesNetwork = JSON.parse(body)
             holder.bountiesNetwork = bountiesNetwork.results
 
+            cached = holder
+
             // Send final response
             res.send(holder)
         })
     })
+}
+
+app.get('/', (req, res) => {
+    if (cached) {
+        res.send(cached)
+    } else {
+        getData(res)
+    }
 })
 
 module.exports = webtask.fromExpress(app)
