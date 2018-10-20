@@ -14,7 +14,8 @@
   - [Tasks](#tasks)
      - [Medium](#medium)
      - [YouTube](#youtube)
-     - [Bounties](#Bounties)
+     - [Bounties](#bounties)
+     - [MailChimp](#mailchimp)
      - [Zoho](#zoho)
         - [Campaigns API](#campaigns-api)
         - [CRM API](#crm-api)
@@ -77,6 +78,19 @@ Response is structured by network and fills it with whatever comes back from res
     {...}
   ]
 }
+```
+
+### MailChimp
+
+**`webtask-mailchimp.js`**: Task to add a new newsletter subscriber.
+
+Construct your `/` request url like so, e.g. locally:
+
+```bash
+http://localhost:8080/newsletter/jelly@mcjellyfish.com
+
+# when published on webtask.io
+https://TASK_URL/TASK_NAME/newsletter/jelly@mcjellyfish.com
 ```
 
 ### Zoho
