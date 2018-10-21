@@ -67,6 +67,8 @@ http://localhost:8080/
 https://TASK_URL/TASK_NAME/
 ```
 
+**Response**
+
 Response is structured by network and fills it with whatever comes back from respective API:
 
 ```json
@@ -84,13 +86,39 @@ Response is structured by network and fills it with whatever comes back from res
 
 **`webtask-mailchimp.js`**: Task to add a new newsletter subscriber.
 
-Construct your `/` request url like so, e.g. locally:
+Construct your `POST /newsletter` request url like so, e.g. locally:
 
 ```bash
 http://localhost:8080/newsletter/jelly@mcjellyfish.com
 
 # when published on webtask.io
 https://TASK_URL/TASK_NAME/newsletter/jelly@mcjellyfish.com
+```
+
+**Response**
+
+When subscription is successful:
+
+```json
+{ "status": "created" }
+```
+
+When subscriber already exists:
+
+```json
+{ "status": "exists" }
+```
+
+All errors from MailChimp (when `"status"` is a number) are simply passed through and follow the MailChimp API error responses, e.g.:
+
+```json
+{
+  "type": "http://developer.mailchimp.com/documentation/mailchimp/guides/error-glossary/",
+  "title": "Forgotten Email Not Subscribed",
+  "status": 400,
+  "detail": "matthias@bigchaindb.com was permanently deleted and cannot be re-imported. The contact must re-subscribe to get back on the list.",
+  "instance": "06171156-4bca-4b6c-a84f-aa3690a82798"
+}
 ```
 
 ### Zoho
