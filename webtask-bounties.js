@@ -1,50 +1,52 @@
-'use strict' // eslint-disable-line
+'use latest'
 
 const express = require('express')
-const request = require('request')
+const axios = require('axios')
 const webtask = require('webtask-tools')
+const regeneratorRuntime = require('regenerator-runtime') // eslint-disable-line
 
-const app = express()
+const server = express()
 
-let cached
+async function getGitcoin() {
+    try {
+        const response = await axios.get('https://gitcoin.co/api/v0.1/bounties/')
 
-const getData = res => {
-    // Just chained callbacks in lack of proper async/await support on webtask.io
-    // Gitcoin bounties
-    request('https://gitcoin.co/api/v0.1/bounties/', (error, response, body) => {
-        if (error) return error
-
-        const gitcoinBody = JSON.parse(body) // returns only open bounties by default
+        const gitcoinBody = response.data // returns only open bounties by default
         const gitcoin = gitcoinBody.filter(
-        // filter the response manually, no way atm to do that as API query
+            // filter the response manually, no way atm to do that as API query
             item => item.funding_organisation.includes('Ocean Protocol')
         )
 
-        let holder = {}
+        const data = { gitcoin: gitcoin.length }
 
-        holder.gitcoin = gitcoin
-
-        // Bounties.network bounties
-        request('https://new.api.bounties.network/bounty/?search=ocean%20protocol&bountyStage=1&platform=bounties-network', (error, response, body) => {
-            if (error) return
-
-            const bountiesNetwork = JSON.parse(body)
-            holder.bountiesNetwork = bountiesNetwork.results
-
-            cached = holder
-
-            // Send final response
-            res.send(holder)
-        })
-    })
+        return data
+    } catch (error) {
+        console.error(`Error: ${error.reason}`) // eslint-disable-line no-console
+    }
 }
 
-app.get('/', (req, res) => {
-    if (cached) {
-        res.send(cached)
-    } else {
-        getData(res)
+async function getBountiesNetwork() {
+    try {
+        const response = await axios.get('https://api.bounties.network/bounty/?search=ocean%20protocol&bountyStage=1&platform=bounties-network')
+
+        const bountiesNetwork = response.data
+        const data = { bountiesNetwork: bountiesNetwork.results.length }
+        return data
+    } catch (error) {
+        console.error(`Error: ${error.reason}`) // eslint-disable-line no-console
+    }
+}
+
+server.get('/', async (req, res) => {
+    try {
+        const dataGitcoin = await getGitcoin()
+        const dataBountiesNetwork = await getBountiesNetwork()
+        const data = Object.assign(dataGitcoin, dataBountiesNetwork)
+
+        res.send(data)
+    } catch (error) {
+        res.send(error)
     }
 })
 
-module.exports = webtask.fromExpress(app)
+module.exports = webtask.fromExpress(server)
