@@ -69,16 +69,12 @@ https://TASK_URL/TASK_NAME/
 
 **Response**
 
-Response is structured by network and fills it with whatever comes back from respective API:
+Response is structured by network and returns the count of open bounties:
 
 ```json
 {
-  "gitcoin": [
-    {...}
-  ],
-  "bountiesNetwork": [
-    {...}
-  ]
+  "gitcoin": 1,
+  "bountiesNetwork": 2
 }
 ```
 
