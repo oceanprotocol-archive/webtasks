@@ -6,27 +6,57 @@ const webtask = require('webtask-tools')
 
 const app = express()
 
-app.get('/', (req, res) => {
-    res.send('Please specify the playlist ID as parameter.')
-})
-
-app.get('/:playlist', (req, res) => {
-    const options = {
-        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&playlistId=${req.params.playlist}&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
-        headers: { 'referer': req.headers.host }
-    }
-
+const makeRequest = (options, cb) => {
     request(options, (error, response, body) => {
         const json = JSON.parse(body)
         const videos = json.items
-        const parsedPosts = []
-
-        let holder = {}
 
         if (error) {
             return
         }
 
+        return cb(videos)
+    })
+}
+
+app.get('/', (req, res) => {
+    res.send('Please specify the playlist ID as parameter.')
+})
+
+app.get('/channel/:channelId', (req, res) => {
+    const options = {
+        url: `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${req.params.channelId}&maxResults=10&order=date&type=video&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
+        headers: { 'referer': req.headers.host }
+    }
+
+    const parsedPosts = []
+    let holder = {}
+
+    makeRequest(options, (videos) => {
+        for (let i = 0; i < videos.length; i++) {
+            holder.id = videos[i].id.videoId
+            holder.title = videos[i].snippet.title
+            holder.description = videos[i].snippet.description
+            holder.imageUrl = videos[i].snippet.thumbnails.medium.url
+            holder.videoUrl = `https://www.youtube.com/watch?v=${videos[i].id.videoId}`
+            parsedPosts.push(holder)
+            holder = {}
+        }
+
+        res.send(parsedPosts)
+    })
+})
+
+app.get('/playlist/:playlistId', (req, res) => {
+    const options = {
+        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&playlistId=${req.params.playlistID}&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
+        headers: { 'referer': req.headers.host }
+    }
+
+    const parsedPosts = []
+    let holder = {}
+
+    makeRequest(options, (videos) => {
         for (let i = 0; i < videos.length; i++) {
             holder.id = videos[i].snippet.resourceId.videoId
             holder.title = videos[i].snippet.title
@@ -41,7 +71,7 @@ app.get('/:playlist', (req, res) => {
     })
 })
 
-app.get('/:playlist/raw', (req, res) => {
+app.get('/playlist/:playlist/raw', (req, res) => {
     const options = {
         url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&playlistId=${req.params.playlist}&key=${process.env.YOUTUBE_API_KEY}`,
         headers: { 'referer': req.headers.host }

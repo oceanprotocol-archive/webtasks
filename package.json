@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "start": "wt serve webtask-bounties.js",
+        "start": "wt serve webtask-youtube.js",
         "test": "eslint ./*.js"
     },
     "dependencies": {
