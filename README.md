@@ -43,15 +43,43 @@ https://TASK_URL/TASK_NAME/:medium_username
 
 ### YouTube
 
-**`webtask-youtube.js`**: Generic task to fetch and reconstruct items from any YouTube account. For now, only fetches a playlist. YouTube API key is provided via [secret environment variable](https://webtask.io/docs/issue_parameters) `YOUTUBE_API_KEY` setup in web editor of webtask.io.
+**`webtask-youtube.js`**: Generic task to fetch and reconstruct items from any YouTube account. YouTube API key is provided via [secret environment variable](https://webtask.io/docs/issue_parameters) `YOUTUBE_API_KEY` setup in web editor of webtask.io.
 
-Construct your request url like so, e.g. locally:
+* `/playlist/:playlistId`: returns all videos in the given playlist.
+* `/channel/:channelId`: returns latest 10 videos in the given channel, sorted by date.
+
+Construct your `GET` request urls like so:
 
 ```bash
-http://localhost:8080/:youtube_playlist_id
+http://localhost:8080/playlist/:youtube_playlist_id
+http://localhost:8080/channel/:youtube_channel_id
 
 # when published on webtask.io
-https://TASK_URL/TASK_NAME/:youtube_playlist_id
+https://TASK_URL/TASK_NAME/playlist/:youtube_playlist_id
+https://TASK_URL/TASK_NAME/channel/:youtube_channel_id
+```
+
+**Response**
+
+For all endpoints, response is reconstructed in the same format:
+
+```json
+[{
+    "id": "8EMowpNlWPE",
+    "title": "Fang Gong, Researcher - Bringing Privacy to Ocean Protocol",
+    "description": "At Ocean Protocol, we unlock data for AI and use TCRs to maintain a registry of high-quality data sets through voting. Privacy is essential to protecting the ...",
+    "imageUrl": "https://i.ytimg.com/vi/8EMowpNlWPE/mqdefault.jpg",
+    "videoUrl": "https://www.youtube.com/watch?v=8EMowpNlWPE"
+},
+{
+    ...
+}]
+```
+
+If you want to get the original response returned from YouTube API, append `/raw` at the end of your request, e.g.:
+
+```
+https://TASK_URL/TASK_NAME/playlist/:youtube_playlist_id/raw
 ```
 
 ### Bounties
