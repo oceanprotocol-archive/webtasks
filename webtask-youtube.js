@@ -12,7 +12,11 @@ const makeRequest = (options, cb) => {
         const videos = json.items
 
         if (error) {
-            return
+            return cb(error)
+        }
+
+        if (json.error) {
+            return cb(json.error)
         }
 
         return cb(videos)
@@ -60,7 +64,7 @@ app.get('/channel/:channelId/raw', (req, res) => {
 
 app.get('/playlist/:playlistId', (req, res) => {
     const options = {
-        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=10&playlistId=${req.params.playlistID}&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
+        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=10&playlistId=${req.params.playlistId}&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
         headers: { 'referer': req.headers.host }
     }
 
@@ -82,9 +86,9 @@ app.get('/playlist/:playlistId', (req, res) => {
     })
 })
 
-app.get('/playlist/:playlist/raw', (req, res) => {
+app.get('/playlist/:playlistId/raw', (req, res) => {
     const options = {
-        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=10&playlistId=${req.params.playlist}&key=${process.env.YOUTUBE_API_KEY}`,
+        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=10&playlistId=${req.params.playlistId}&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
         headers: { 'referer': req.headers.host }
     }
 
