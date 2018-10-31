@@ -49,7 +49,7 @@ app.get('/channel/:channelId', (req, res) => {
 
 app.get('/playlist/:playlistId', (req, res) => {
     const options = {
-        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&playlistId=${req.params.playlistID}&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
+        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=10&playlistId=${req.params.playlistID}&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
         headers: { 'referer': req.headers.host }
     }
 
