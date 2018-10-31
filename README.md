@@ -76,6 +76,12 @@ For all endpoints, response is reconstructed in the same format:
 }]
 ```
 
+If you want to get the original response returned from YouTube API, append `/raw` at the end of your request, e.g.:
+
+```
+https://TASK_URL/TASK_NAME/playlist/:youtube_playlist_id/raw
+```
+
 ### Bounties
 
 **`webtask-bounties.js`**: Task to fetch open bounties on Gitcoin and Bounties.network in one request. Task creates a unified response from fetching both networks.

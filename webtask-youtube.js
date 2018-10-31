@@ -20,7 +20,7 @@ const makeRequest = (options, cb) => {
 }
 
 app.get('/', (req, res) => {
-    res.send('Please specify the playlist ID as parameter.')
+    res.send('Please use /channel or /playlist endpoints, appended with the channel or playlist ID as parameter.')
 })
 
 app.get('/channel/:channelId', (req, res) => {
@@ -44,6 +44,17 @@ app.get('/channel/:channelId', (req, res) => {
         }
 
         res.send(parsedPosts)
+    })
+})
+
+app.get('/channel/:channelId/raw', (req, res) => {
+    const options = {
+        url: `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${req.params.channelId}&maxResults=10&order=date&type=video&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
+        headers: { 'referer': req.headers.host }
+    }
+
+    makeRequest(options, (videos) => {
+        res.send(videos)
     })
 })
 
@@ -73,18 +84,12 @@ app.get('/playlist/:playlistId', (req, res) => {
 
 app.get('/playlist/:playlist/raw', (req, res) => {
     const options = {
-        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&playlistId=${req.params.playlist}&key=${process.env.YOUTUBE_API_KEY}`,
+        url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=10&playlistId=${req.params.playlist}&key=${process.env.YOUTUBE_API_KEY}`,
         headers: { 'referer': req.headers.host }
     }
 
-    request(options, (error, response, body) => {
-        const json = JSON.parse(body)
-
-        if (error) {
-            return
-        }
-
-        res.send(json.items)
+    makeRequest(options, (videos) => {
+        res.send(videos)
     })
 })
 
