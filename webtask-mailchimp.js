@@ -91,14 +91,12 @@ server.post('/newsletter/:email', (req, res) => {
             request.put(optionsCreate, (error2, response, body2) => {
                 if (error2) res.send(error2)
 
-                const data2 = JSON.parse(body2)
-
-                if (Number.isInteger(data2.status)) {
+                if (Number.isInteger(body2.status)) {
                     res.send(body2)
                 }
 
                 // Patch in native GDPR permissions
-                addMarketingPermissions(data2, () => {
+                addMarketingPermissions(body2, () => {
                     res.send('{ "status": "created" }')
                 })
             })
