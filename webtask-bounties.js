@@ -37,11 +37,25 @@ async function getBountiesNetwork() {
     }
 }
 
+async function getTotal() {
+    try {
+        const response = await axios.get('https://api.bounties.network/bounty/?search=ocean%20protocol')
+
+        const allBounties = response.data
+        const data = { total: allBounties.count }
+        return data
+    } catch (error) {
+        console.error(`Error: ${error.reason}`) // eslint-disable-line no-console
+    }
+}
+
 server.get('/', async (req, res) => {
     try {
         const dataGitcoin = await getGitcoin()
         const dataBountiesNetwork = await getBountiesNetwork()
-        const data = Object.assign(dataGitcoin, dataBountiesNetwork)
+        const dataTotal = await getTotal()
+
+        const data = Object.assign(dataGitcoin, dataBountiesNetwork, dataTotal)
 
         res.send(data)
     } catch (error) {
