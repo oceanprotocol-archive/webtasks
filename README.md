@@ -9,20 +9,18 @@
 [![Build Status](https://travis-ci.com/oceanprotocol/webtasks.svg?token=3psqw6c8KMDqfdGQ2x6d&branch=master)](https://travis-ci.com/oceanprotocol/webtasks)
 [![js oceanprotocol](https://img.shields.io/badge/js-oceanprotocol-7b1173.svg)](https://github.com/oceanprotocol/eslint-config-oceanprotocol) [![Greenkeeper badge](https://badges.greenkeeper.io/oceanprotocol/webtasks.svg)](https://greenkeeper.io/)
 
-## Table of Contents
-
-  - [Tasks](#tasks)
-     - [Medium](#medium)
-     - [YouTube](#youtube)
-     - [Bounties](#bounties)
-     - [MailChimp](#mailchimp)
-     - [Zoho](#zoho)
-        - [Campaigns API](#campaigns-api)
-        - [CRM API](#crm-api)
-  - [Development](#development)
-  - [Deployment](#deployment)
-  - [Authors](#authors)
-  - [License](#license)
+- [Tasks](#tasks)
+  - [Medium](#medium)
+  - [YouTube](#youtube)
+  - [Bounties](#bounties)
+  - [MailChimp](#mailchimp)
+  - [Zoho](#zoho)
+    - [Campaigns API](#campaigns-api)
+    - [CRM API](#crm-api)
+- [Development](#development)
+- [Deployment](#deployment)
+- [Authors](#authors)
+- [License](#license)
 
 ---
 
@@ -97,12 +95,13 @@ https://TASK_URL/TASK_NAME/
 
 **Response**
 
-Response is structured by network and returns the count of open bounties:
+Response is structured by network and returns the count of open bounties, and a `total` number counting all active and completed bounties:
 
 ```json
 {
   "gitcoin": 1,
-  "bountiesNetwork": 2
+  "bountiesNetwork": 2,
+  "total": 17
 }
 ```
 
