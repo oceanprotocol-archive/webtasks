@@ -49,4 +49,17 @@ server.get('/', async (req, res) => {
     }
 })
 
+server.get('/all', async (req, res) => {
+    try {
+        const response = await axios.get('https://api.bounties.network/bounty/?search=ocean%20protocol')
+
+        const allBounties = response.data
+        const data = { count: allBounties.count }
+
+        res.send(data)
+    } catch (error) {
+        res.send(error)
+    }
+})
+
 module.exports = webtask.fromExpress(server)
