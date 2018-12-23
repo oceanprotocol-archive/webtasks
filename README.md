@@ -11,6 +11,8 @@
 
 - [Tasks](#tasks)
   - [Medium](#medium)
+    - [Get Latest Posts](#get-latest-posts)
+    - [Get Followers Count](#get-followers-count)
   - [YouTube](#youtube)
   - [Bounties](#bounties)
   - [MailChimp](#mailchimp)
@@ -30,6 +32,8 @@
 
 **`webtask-medium.js`**: Generic task to fetch and reconstruct items from any medium publication.
 
+#### Get Latest Posts
+
 Requires the Medium username appended at the end of the url:
 
 ```bash
@@ -37,6 +41,23 @@ http://localhost:8080/:medium_username
 
 # when published on webtask.io
 https://TASK_URL/TASK_NAME/:medium_username
+```
+
+#### Get Followers Count
+
+```bash
+http://localhost:8080/:medium_username/followers
+
+# when published on webtask.io
+https://TASK_URL/TASK_NAME/:medium_username/followers
+```
+
+**Response**
+
+```json
+{
+  "followers": 2528
+}
 ```
 
 ### YouTube

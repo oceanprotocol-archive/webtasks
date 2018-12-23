@@ -50,4 +50,17 @@ app.get('/:username/raw', (req, res) => {
     })
 })
 
+app.get('/:username/followers', (req, res) => {
+    const url = `https://medium.com/${req.params.username}?format=json`
+
+    request(url, (error, response) => {
+        const json = JSON.parse(response.body.replace('])}while(1);</x>', ''))
+        const { collection } = json.payload
+
+        if (error) return
+
+        res.send(`{ "followers": ${collection.metadata.followerCount} }`)
+    })
+})
+
 module.exports = webtask.fromExpress(app)
