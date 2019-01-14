@@ -14,7 +14,6 @@
     - [Get Latest Posts](#get-latest-posts)
     - [Get Followers Count](#get-followers-count)
   - [YouTube](#youtube)
-  - [Bounties](#bounties)
   - [MailChimp](#mailchimp)
   - [Zoho](#zoho)
     - [Campaigns API](#campaigns-api)
@@ -99,31 +98,6 @@ If you want to get the original response returned from YouTube API, append `/raw
 
 ```
 https://TASK_URL/TASK_NAME/playlist/:youtube_playlist_id/raw
-```
-
-### Bounties
-
-**`webtask-bounties.js`**: Task to fetch open bounties on Gitcoin and Bounties.network in one request. Task creates a unified response from fetching both networks.
-
-Construct your `/` request url like so, e.g. locally:
-
-```bash
-http://localhost:8080/
-
-# when published on webtask.io
-https://TASK_URL/TASK_NAME/
-```
-
-**Response**
-
-Response is structured by network and returns the count of open bounties, and a `total` number counting all active and completed bounties:
-
-```json
-{
-  "gitcoin": 1,
-  "bountiesNetwork": 2,
-  "total": 17
-}
 ```
 
 ### MailChimp
