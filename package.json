@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "start": "wt serve webtask-youtube.js",
+        "start": "wt serve webtask-medium.js",
         "test": "eslint ./*.js"
     },
     "dependencies": {

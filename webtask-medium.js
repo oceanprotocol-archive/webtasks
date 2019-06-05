@@ -63,4 +63,26 @@ app.get('/:username/followers', (req, res) => {
     })
 })
 
+app.get('/:username/categories', (req, res) => {
+    const url = `https://medium.com/${req.params.username}?format=json`
+
+    request(url, (error, response) => {
+        const json = JSON.parse(response.body.replace('])}while(1);</x>', ''))
+        const { navItems } = json.payload.collection
+        const parsedCategories = []
+        let holder = {}
+
+        if (error) return
+
+        for (let i = 0; i < navItems.length; i++) {
+            holder.title = navItems[i].title
+            holder.url = navItems[i].url
+            parsedCategories.push(holder)
+            holder = {}
+        }
+
+        res.send(parsedCategories)
+    })
+})
+
 module.exports = webtask.fromExpress(app)

@@ -13,6 +13,7 @@
   - [Medium](#medium)
     - [Get Latest Posts](#get-latest-posts)
     - [Get Followers Count](#get-followers-count)
+    - [Get Categories](#get-categories)
   - [YouTube](#youtube)
   - [MailChimp](#mailchimp)
   - [Zoho](#zoho)
@@ -57,6 +58,43 @@ https://TASK_URL/TASK_NAME/:medium_username/followers
 {
   "followers": 2528
 }
+```
+
+#### Get Categories
+
+Reflecting the navigation categories used in the blog.
+
+```bash
+http://localhost:8080/:medium_username/categories
+
+# when published on webtask.io
+https://TASK_URL/TASK_NAME/:medium_username/categories
+```
+
+**Response**
+
+```json
+[
+    {
+        "title": "Product",
+        "url": "https://blog.oceanprotocol.com/product/home"
+    }, {
+        "title": "Community",
+        "url": "https://blog.oceanprotocol.com/community/home"
+    }, {
+        "title": "Deep Tech",
+        "url": "https://blog.oceanprotocol.com/deep-tech/home"
+    }, {
+        "title": "People",
+        "url": "https://blog.oceanprotocol.com/people/home"
+    }, {
+        "title": "Token Launch",
+        "url": "https://blog.oceanprotocol.com/token/home"
+    }, {
+        "title": "Use Cases",
+        "url": "https://blog.oceanprotocol.com/usecases/home"
+    }
+]
 ```
 
 ### YouTube
