@@ -16,6 +16,8 @@
     - [Get Categories](#get-categories)
   - [YouTube](#youtube)
   - [MailChimp](#mailchimp)
+  - [Meetup](#meetup)
+    - [`GET /`](#get-)
   - [Zoho](#zoho)
     - [Campaigns API](#campaigns-api)
     - [CRM API](#crm-api)
@@ -174,6 +176,32 @@ All errors from MailChimp (when `"status"` is a number) are simply passed throug
   "status": 400,
   "detail": "matthias@bigchaindb.com was permanently deleted and cannot be re-imported. The contact must re-subscribe to get back on the list.",
   "instance": "06171156-4bca-4b6c-a84f-aa3690a82798"
+}
+```
+
+### Meetup
+
+**`webtask-meetup.js`**: Task to get information from Meetup.
+
+#### `GET /`
+
+```bash
+http://localhost:8080/meetup
+
+# when published on webtask.io
+https://TASK_URL/TASK_NAME/meetup
+```
+
+**Response**
+
+Field `groups` holds passed through array of objects with all groups. See https://www.meetup.com/meetup_api/docs/pro/:urlname/groups/
+
+```json
+{
+    "groups": [{
+        ...
+    }],
+    "members": 40238
 }
 ```
 
