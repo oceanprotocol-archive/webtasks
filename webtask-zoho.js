@@ -78,7 +78,7 @@ server.get('/crm/:data', (req, res) => {
 
     const options = {
         url: `${apiUrlZohoCRM}Leads`,
-        headers: { 'Authorization': `Zoho-oauthtoken ${ZOHO_CRM_TOKEN}` },
+        headers: { Authorization: `Zoho-oauthtoken ${ZOHO_CRM_TOKEN}` },
         method: 'POST',
         formData: data
     }

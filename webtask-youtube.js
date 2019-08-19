@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 app.get('/channel/:channelId', (req, res) => {
     const options = {
         url: `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${req.params.channelId}&maxResults=10&order=date&type=video&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
-        headers: { 'referer': req.headers.host }
+        headers: { referer: req.headers.host }
     }
 
     const parsedPosts = []
@@ -54,7 +54,7 @@ app.get('/channel/:channelId', (req, res) => {
 app.get('/channel/:channelId/raw', (req, res) => {
     const options = {
         url: `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${req.params.channelId}&maxResults=10&order=date&type=video&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
-        headers: { 'referer': req.headers.host }
+        headers: { referer: req.headers.host }
     }
 
     makeRequest(options, (videos) => {
@@ -65,7 +65,7 @@ app.get('/channel/:channelId/raw', (req, res) => {
 app.get('/playlist/:playlistId', (req, res) => {
     const options = {
         url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=10&playlistId=${req.params.playlistId}&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
-        headers: { 'referer': req.headers.host }
+        headers: { referer: req.headers.host }
     }
 
     const parsedPosts = []
@@ -89,7 +89,7 @@ app.get('/playlist/:playlistId', (req, res) => {
 app.get('/playlist/:playlistId/raw', (req, res) => {
     const options = {
         url: `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=10&playlistId=${req.params.playlistId}&key=${req.webtaskContext.secrets.YOUTUBE_API_KEY}`,
-        headers: { 'referer': req.headers.host }
+        headers: { referer: req.headers.host }
     }
 
     makeRequest(options, (videos) => {

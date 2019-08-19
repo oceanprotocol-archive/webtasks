@@ -33,20 +33,20 @@ server.post('/newsletter/:email', (req, res) => {
 
     const baseOptions = {
         url: `${baseUrl}/lists/${listId}/members/${subscriberHash}`,
-        'auth': {
-            'user': 'oceanprotocol',
-            'pass': MAILCHIMP_API_KEY
+        auth: {
+            user: 'oceanprotocol',
+            pass: MAILCHIMP_API_KEY
         }
     }
 
     const optionsCreate = {
         ...baseOptions,
         json: {
-            'email_address': emailDecoded,
-            'status': 'pending', // double opt-in
-            'merge_fields': {
+            email_address: emailDecoded,
+            status: 'pending', // double opt-in
+            merge_fields: {
                 // our GDPR fallback
-                'GDPR': 'yes'
+                GDPR: 'yes'
             }
         }
     }
@@ -55,10 +55,10 @@ server.post('/newsletter/:email', (req, res) => {
         {
             ...baseOptions,
             json: {
-                'marketing_permissions': [{
-                    'marketing_permission_id': marketingPermissionId,
-                    'text': 'Email',
-                    'enabled': true
+                marketing_permissions: [{
+                    marketing_permission_id: marketingPermissionId,
+                    text: 'Email',
+                    enabled: true
                 }]
             }
         }
