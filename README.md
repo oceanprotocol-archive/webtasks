@@ -18,9 +18,6 @@
   - [MailChimp](#mailchimp)
   - [Meetup](#meetup)
     - [`GET /`](#get-)
-  - [Zoho](#zoho)
-    - [Campaigns API](#campaigns-api)
-    - [CRM API](#crm-api)
 - [Development](#development)
 - [Deployment](#deployment)
 - [Authors](#authors)
@@ -203,54 +200,6 @@ Field `groups` holds passed through array of objects with all groups. See https:
     }],
     "members": 40238
 }
-```
-
-### Zoho
-
-**`webtask-zoho.js`**: Generic task to subscribe users into lists on Zoho Campaigns & Zoho CRM.
-
-Credentials are provided via [secret environment variables](https://webtask.io/docs/issue_parameters), setup in web editor of webtask.io:
-
-* `ZOHO_CAMPAIGNS_TOKEN`
-* `ZOHO_CAMPAIGNS_LIST_KEY`
-* `ZOHO_CRM_TOKEN`
-
-#### Campaigns API
-
-* `/newsletter/:data`: subscribes the given email address to the newsletter list on Zoho Campaigns.
-
-The data needs to be in `json` format in the following pattern:
-
-```
-{Contact Email:info@oceanprotocol.com}
-```
-
-Construct your request url like so, e.g. locally:
-
-```bash
-http://localhost:8080/newsletter/:data
-
-# when published on webtask.io
-https://TASK_URL/TASK_NAME/newsletter/:data
-```
-
-#### CRM API
-
-* `/crm/:data`: subscribes the given email address to the newsletter list on Zoho Campaigns.
-
-The data needs to be in `json` format in the following pattern:
-
-```
-{First Name:Jellyfish, Last Name:McJellyfish, Contact Email:info@oceanprotocol.com}
-```
-
-Construct your request url like so, e.g. locally:
-
-```bash
-http://localhost:8080/crm/:data
-
-# when published on webtask.io
-https://TASK_URL/TASK_NAME/crm/:data
 ```
 
 ## Development
