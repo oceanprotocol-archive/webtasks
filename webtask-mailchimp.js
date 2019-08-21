@@ -23,7 +23,11 @@ server.use(cors(corsOptions))
 const baseUrl = 'https://us16.api.mailchimp.com/3.0'
 const listId = '3c6eed8b71'
 
-const md5 = data => crypto.createHash('md5').update(data).digest('hex')
+const md5 = data =>
+    crypto
+        .createHash('md5')
+        .update(data)
+        .digest('hex')
 
 server.post('/newsletter/:email', (req, res) => {
     const { email } = req.params
@@ -51,27 +55,31 @@ server.post('/newsletter/:email', (req, res) => {
         }
     }
 
-    const optionsMarketing = marketingPermissionId => (
-        {
-            ...baseOptions,
-            json: {
-                marketing_permissions: [{
+    const optionsMarketing = marketingPermissionId => ({
+        ...baseOptions,
+        json: {
+            marketing_permissions: [
+                {
                     marketing_permission_id: marketingPermissionId,
                     text: 'Email',
                     enabled: true
-                }]
-            }
+                }
+            ]
         }
-    )
+    })
 
     const addMarketingPermissions = (data, cb) => {
-        const marketingPermissionId = data.marketing_permissions[0].marketing_permission_id
+        const marketingPermissionId =
+            data.marketing_permissions[0].marketing_permission_id
 
-        request.patch(optionsMarketing(marketingPermissionId), (error, response, body) => {
-            if (error) res.send(error)
+        request.patch(
+            optionsMarketing(marketingPermissionId),
+            (error, response, body) => {
+                if (error) res.send(error)
 
-            return cb(body)
-        })
+                return cb(body)
+            }
+        )
     }
 
     // Check if user exists first

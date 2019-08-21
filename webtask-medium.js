@@ -27,8 +27,12 @@ app.get('/:username', (req, res) => {
             holder.readingTime = posts[i].virtuals.readingTime
             holder.title = posts[i].title
             holder.subtitle = posts[i].virtuals.subtitle
-            holder.imageUrl = `https://cdn-images-1.medium.com/max/600/${posts[i].virtuals.previewImage.imageId}`
-            holder.postUrl = `https://medium.com/${req.params.username}/${posts[i].id}`
+            holder.imageUrl = `https://cdn-images-1.medium.com/max/600/${
+                posts[i].virtuals.previewImage.imageId
+            }`
+            holder.postUrl = `https://medium.com/${req.params.username}/${
+                posts[i].id
+            }`
             parsedPosts.push(holder)
             holder = {}
         }

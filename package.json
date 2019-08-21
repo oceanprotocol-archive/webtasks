@@ -15,7 +15,7 @@
         "webtask-tools": "^3.4.0"
     },
     "devDependencies": {
-        "eslint": "^6.2.0",
-        "eslint-config-oceanprotocol": "^1.4.0"
+        "eslint": "^6.2.1",
+        "eslint-config-oceanprotocol": "^1.5.0"
     }
 }

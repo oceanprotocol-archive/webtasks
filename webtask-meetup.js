@@ -30,20 +30,24 @@ server.get('/', (req, res) => {
 
     try {
         request.get(options, (error, response, body) => {
-            if (error || response.statusCode !== 200) res.send(error)
-
             const data = JSON.parse(body)
             let members = []
 
-            for (const item of data) {
-                members.push(item.member_count)
+            if (error) res.send(error)
+            if (response.statusCode !== 200) res.send(body)
+
+            if (Array.isArray(data)) {
+                for (const item of data) {
+                    members.push(item.member_count)
+                }
+
+                members = members.reduce((a, b) => a + b, 0)
             }
 
-            members = members.reduce((a, b) => a + b, 0)
             res.send({ groups: data, members })
         })
     } catch (error) {
-        console.log(error)
+        console.error(error)
         res.send(error)
     }
 })
