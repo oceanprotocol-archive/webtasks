@@ -21,11 +21,35 @@ server.use(cors(corsOptions))
 
 const baseUrl = 'https://api.meetup.com'
 
-server.get('/', (req, res) => {
-    const { MEETUP_API_KEY } = req.webtaskContext.secrets
+server.get('/', async (req, res) => {
+    //
+    // OAuth2 Authentication
+    //
+    const { MEETUP_OAUTH_KEY, MEETUP_OAUTH_SECRET } = req.webtaskContext.secrets
+
+    // Requesting Authorization
+    const authOptions = {
+        url: `https://secure.meetup.com/oauth2/authorize?client_id=${MEETUP_OAUTH_KEY}&redirect_uri=https://oceanprotocol.com&response_type=anonymous_code`
+    }
+
+    const code = await request.get(authOptions, (error, response, body) => {
+        if (error) res.send(error)
+        console.log(body)
+        return JSON.parse(body).code
+    })
+
+    // Requesting Access Token
+    const tokenAuthOptions = {
+        url: `https://secure.meetup.com/oauth2/access?client_id=${MEETUP_OAUTH_KEY}&client_secret=${MEETUP_OAUTH_SECRET}&grant_type=anonymous_code&redirect_uri=https://oceanprotocol.com&code=${code}`
+    }
+    const token = request.post(tokenAuthOptions, (error, response, body) => {
+        if (error) res.send(error)
+        console.log(body)
+        return JSON.parse(body).access_token
+    })
 
     const options = {
-        url: `${baseUrl}/pro/data-economy/groups?key=${MEETUP_API_KEY}`
+        url: `${baseUrl}/pro/data-economy/groups?access_token=${token}`
     }
 
     try {
