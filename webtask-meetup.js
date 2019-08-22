@@ -3,8 +3,11 @@ const Webtask = require('webtask-tools')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const request = require('request')
+const axios = require('axios')
 
 const server = express()
+
+require('dotenv').config()
 
 server.listen(4430)
 server.use(bodyParser.json())
@@ -21,35 +24,54 @@ server.use(cors(corsOptions))
 
 const baseUrl = 'https://api.meetup.com'
 
-server.get('/', async (req, res) => {
+const oAuthFlow = async () => {
     //
     // OAuth2 Authentication
     //
-    const { MEETUP_OAUTH_KEY, MEETUP_OAUTH_SECRET } = req.webtaskContext.secrets
+    // const { MEETUP_OAUTH_KEY, MEETUP_OAUTH_SECRET } = req.webtaskContext.secrets
+    const {
+        MEETUP_OAUTH_KEY,
+        MEETUP_OAUTH_SECRET,
+        MEETUP_EMAIL,
+        MEETUP_PASSWORD
+    } = process.env
 
     // Requesting Authorization
     const authOptions = {
-        url: `https://secure.meetup.com/oauth2/authorize?client_id=${MEETUP_OAUTH_KEY}&redirect_uri=https://oceanprotocol.com&response_type=anonymous_code`
+        url: `https://secure.meetup.com/oauth2/authorize?client_id=${MEETUP_OAUTH_KEY}&redirect_uri=/&response_type=anonymous_code`,
+        headers: {
+            Accept: 'application/json'
+        }
     }
-
-    const code = await request.get(authOptions, (error, response, body) => {
-        if (error) res.send(error)
-        console.log(body)
-        return JSON.parse(body).code
-    })
+    const response = await axios(authOptions)
+    console.log(response.data)
 
     // Requesting Access Token
-    const tokenAuthOptions = {
-        url: `https://secure.meetup.com/oauth2/access?client_id=${MEETUP_OAUTH_KEY}&client_secret=${MEETUP_OAUTH_SECRET}&grant_type=anonymous_code&redirect_uri=https://oceanprotocol.com&code=${code}`
-    }
-    const token = request.post(tokenAuthOptions, (error, response, body) => {
-        if (error) res.send(error)
-        console.log(body)
-        return JSON.parse(body).access_token
-    })
+    // const tokenAuthOptions = {
+    //     url: `https://secure.meetup.com/oauth2/access?client_id=${MEETUP_OAUTH_KEY}&client_secret=${MEETUP_OAUTH_SECRET}&grant_type=anonymous_code&redirect_uri=https://oceanprotocol.com&code=${code}`,
+    //     method: 'POST'
+    // }
+    // const accessToken = await axios(tokenAuthOptions).access_token
+
+    // // Send user credentials
+    // const userAuthOptions = {
+    //     url: `https://api.meetup.com/sessions?&email=${MEETUP_EMAIL}&password=${MEETUP_PASSWORD}`,
+    //     method: 'POST',
+    //     headers: {
+    //         Authorization: `Bearer ${accessToken}`
+    //     }
+    // }
+
+    // const oauthToken = await await axios(userAuthOptions).oauth_token
+
+    // return oauthToken
+}
+
+server.get('/', async (req, res) => {
+    const oauthToken = await oAuthFlow()
 
     const options = {
-        url: `${baseUrl}/pro/data-economy/groups?access_token=${token}`
+        url: `${baseUrl}/pro/data-economy/groups?access_token=${oauthToken}`
     }
 
     try {
@@ -57,7 +79,7 @@ server.get('/', async (req, res) => {
             const data = JSON.parse(body)
             let members = []
 
-            if (error) res.send(error)
+            if (error) res.send(error.error_description)
             if (response.statusCode !== 200) res.send(body)
 
             if (Array.isArray(data)) {
@@ -71,8 +93,8 @@ server.get('/', async (req, res) => {
             res.send({ groups: data, members })
         })
     } catch (error) {
-        console.error(error)
-        res.send(error)
+        console.error(error.error_description)
+        res.send(error.error_description)
     }
 })
 
