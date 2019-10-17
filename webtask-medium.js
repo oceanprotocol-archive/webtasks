@@ -7,19 +7,30 @@ const webtask = require('webtask-tools')
 const app = express()
 
 app.get('/', (req, res) => {
-    res.send('Please enter a username as a parameter')
+    res.status(400).send('Please enter a username as a parameter')
 })
 
 app.get('/:username', (req, res) => {
     const url = `https://medium.com/${req.params.username}/latest?format=json`
+    const j = request.jar()
+    const requestWithCookies = request.defaults({ jar: j, json: true })
 
-    request(url, (error, response) => {
-        const json = JSON.parse(response.body.replace('])}while(1);</x>', ''))
+    requestWithCookies(url, (error, response) => {
+        const prefix = '])}while(1);</x>'
+        if (!response.body.includes(prefix)) {
+            res.status(500).send({ 
+                success: false, 
+                reason: 'Failed getting posts from Medium.'
+            })
+        }
+        const json = JSON.parse(response.body.replace(prefix, ''))
         const { posts } = json.payload
         const parsedPosts = []
         let holder = {}
 
-        if (error) return
+        if (error) {
+            res.status(error.status).send({ success: false })
+        }
 
         for (let i = 0; i < posts.length; i++) {
             holder.id = posts[i].id
@@ -27,12 +38,8 @@ app.get('/:username', (req, res) => {
             holder.readingTime = posts[i].virtuals.readingTime
             holder.title = posts[i].title
             holder.subtitle = posts[i].virtuals.subtitle
-            holder.imageUrl = `https://cdn-images-1.medium.com/max/600/${
-                posts[i].virtuals.previewImage.imageId
-            }`
-            holder.postUrl = `https://medium.com/${req.params.username}/${
-                posts[i].id
-            }`
+            holder.imageUrl = `https://cdn-images-1.medium.com/max/600/${posts[i].virtuals.previewImage.imageId}`
+            holder.postUrl = `https://medium.com/${req.params.username}/${posts[i].id}`
             parsedPosts.push(holder)
             holder = {}
         }
