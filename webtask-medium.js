@@ -18,8 +18,8 @@ app.get('/:username', (req, res) => {
     requestWithCookies(url, (error, response) => {
         const prefix = '])}while(1);</x>'
         if (!response.body.includes(prefix)) {
-            res.status(500).send({ 
-                success: false, 
+            res.status(500).send({
+                success: false,
                 reason: 'Failed getting posts from Medium.'
             })
         }
