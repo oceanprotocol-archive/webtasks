@@ -26,7 +26,7 @@ app.get('/:username', (req, res) => {
         let posts
 
         if (json.payload.posts) {
-            posts = json.payload.posts
+            ({ posts } = json.payload.posts)
         }
         if (json.payload.references.Post) {
             posts = Object.keys(json.payload.references.Post).map(
