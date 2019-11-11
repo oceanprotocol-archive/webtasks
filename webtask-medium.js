@@ -11,11 +11,9 @@ app.get('/', (req, res) => {
 })
 
 app.get('/:username', (req, res) => {
-    const url = `https://medium.com/${req.params.username}/latest?format=json`
-    const j = request.jar()
-    const requestWithCookies = request.defaults({ jar: j, json: true })
+    const url = `https://medium.com/${req.params.username}/?format=json`
 
-    requestWithCookies(url, (error, response) => {
+    request(url, (error, response) => {
         const prefix = '])}while(1);</x>'
         if (!response.body.includes(prefix)) {
             res.status(500).send({
@@ -24,7 +22,18 @@ app.get('/:username', (req, res) => {
             })
         }
         const json = JSON.parse(response.body.replace(prefix, ''))
-        const { posts } = json.payload
+
+        let posts
+
+        if (json.payload.posts) {
+            posts = json.payload.posts
+        }
+        if (json.payload.references.Post) {
+            posts = Object.keys(json.payload.references.Post).map(
+                key => json.payload.references.Post[key]
+            )
+        }
+
         const parsedPosts = []
         let holder = {}
 
